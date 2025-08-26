@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -31,5 +31,20 @@ def contact_api():
     print('Contact API endpoint accessed')
     user = {'name': 'peter', 'age': 35}
     return user
+
+students = [
+    {'id': 1, 'name': 'Bruce', 'age': 54, 'email': 'batman@gmail.com'},
+    {'id': 2, 'name': 'Pam', 'age': 29, 'email': 'pam@gmail.com'}
+]
+
+@app.get('/students')
+def get_students():
+    return students
+
+@app.post('/students')
+def post_students():
+    data = request.json
+    students.append(data)
+    return students
 
 app.run(debug=True)
