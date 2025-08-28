@@ -80,6 +80,10 @@ def get_coupons():
 @app.route("/api/coupon/<coupon_name>", methods=["GET"])
 def search_coupon_by_name(coupon_name):
     filtered = [c for c in coupons if coupon_name.lower() in c["name"].lower()]
+    
+    if not filtered:
+        return jsonify({"message": "Coupon not found"}), 404
+    
     return jsonify(filtered)
 
 
