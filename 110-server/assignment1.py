@@ -22,7 +22,10 @@ products = [
 ]
 
 # In-memory coupon storage
-coupons = []
+coupons = [
+    {'name': 'save10', 'discount': 0.10},
+    {'name': 'save50', 'discount': 0.50}
+]
 
 
 # ---------- Product Endpoints ----------
@@ -74,10 +77,9 @@ def get_coupons():
     return jsonify(coupons)
 
 # Search coupon by name
-@app.route("/api/coupon/search", methods=["GET"])
-def search_coupon_by_name():
-    query = request.args.get("q", "")
-    filtered = [c for c in coupons if query.lower() in c["name"].lower()]
+@app.route("/api/coupon/<coupon_name>", methods=["GET"])
+def search_coupon_by_name(coupon_name):
+    filtered = [c for c in coupons if coupon_name.lower() in c["name"].lower()]
     return jsonify(filtered)
 
 
